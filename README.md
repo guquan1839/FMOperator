@@ -20,7 +20,6 @@ v1/
 ├── FMO_ABSI.py         FMO_BSI + input-dependent (attentive) field-pair weights
 ├── FMO_MBSI.py         FMO_BSI with per-head MLP interaction factors
 ├── FMO_MABSI.py        MLP interaction factors + per-head attentive field-pair weights
-├── smoke_v1_5000.py    5000-step smoke test for all four models (no data required)
 └── README.md
 ```
 
@@ -85,8 +84,7 @@ their non-attentive counterpart.
   equivalence.
 * **Attention starts at the baseline.** The gate $w_h$ is zero-initialised, so
   $\alpha_h$ is uniform at step 0 and the attentive models are numerically
-  identical to their non-attentive counterparts at initialisation. This is
-  verified automatically by the smoke test.
+  identical to their non-attentive counterparts at initialisation.
 * **Identity output activation on the factors.** `FMO_MBSI`/`FMO_MABSI` apply
   the non-linearity in the hidden layer of the factor MLP and leave the factors
   themselves linear (`proj_out_act="identity"`). Squashing the factors right
@@ -118,37 +116,6 @@ Every file can also be executed directly for a parameter-count self-check:
 ```bash
 python FMO_MBSI.py
 ```
-
-## Verification
-
-The smoke test trains each of the four files from scratch on a synthetic
-operator-learning task whose target requires the interaction path, and writes a
-status report:
-
-```bash
-python smoke_v1_5000.py                                   # 5000 steps per model
-python smoke_v1_5000.py --models FMO_BSI --steps 200      # quick check
-python smoke_v1_5000.py --from-json                       # re-render the text report
-```
-
-It reports, per model: parameter count, first-100 vs last-100 minibatch loss,
-full-batch train/validation MSE, whether every parameter receives a gradient,
-the learned pair-weight distribution, and the exact initial equivalence between
-each attentive model and its non-attentive counterpart. Results are written to
-`smoke_v1_<steps>_report.txt` / `smoke_v1_<steps>_report.json` (the default run
-therefore produces `smoke_v1_5000_report.txt`), next to a live
-`smoke_v1_<steps>_progress.txt`.
-
-The text report also flags **attention collapse**: if the pair-weight entropy
-falls far below the uniform value $\ln 6$ the softmax has saturated, so the
-model keeps a single field pair and the other five can no longer contribute.
-This is a warning rather than a training failure, but it is worth watching — a
-collapsed attention is strictly less expressive than the uniform sum it started
-from.
-
-The smoke test is a *sanity check* (does the code train, are the mechanisms
-alive, are the variants consistent), **not** a benchmark: it uses a small
-synthetic task, not the datasets of the paper.
 
 ## Requirements
 
