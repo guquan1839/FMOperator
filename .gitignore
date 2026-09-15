@@ -1,0 +1,18 @@
+# Release content: the four model files, the README and the released
+# experiment artefacts are tracked.  Everything else (smoke tests, reports,
+# logs, caches, notebooks) stays local.
+*
+!.gitignore
+!README.md
+!FMO_BSI.py
+!FMO_ABSI.py
+!FMO_MBSI.py
+!FMO_MABSI.py
+
+# Released experiments: KS fusion ablation at three training-set sizes,
+# three fusion methods each.  The directory has to be un-ignored level by
+# level, because a whitelist pattern never descends into an ignored folder.
+!Experiments/
+!Experiments/**
+Experiments/**/*.tmp
+Experiments/**/latest.pt
