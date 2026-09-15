@@ -125,10 +125,13 @@ python FMO_MBSI.py
 ## Citation
 
 ```bibtex
-@misc{fmo2026,
-  title        = {Feature Interaction Modeling for Neural Operators},
-  howpublished = {arXiv:2607.28762},
-  year         = {2026},
-  note         = {Code repository; see the paper for the full author list}
+@misc{gu2026featureinteractionmodelingneural,
+  title         = {Feature Interaction Modeling for Neural Operators},
+  author        = {Quan Gu and Xiaoduo Li and Hongxia Liu},
+  year          = {2026},
+  eprint        = {2607.28762},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  url           = {https://arxiv.org/abs/2607.28762}
 }
 ```
