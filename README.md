@@ -141,27 +141,30 @@ minibatch. They are selection rules, not train/validation errors.
   `||prediction - target||_2 / ||target||_2` (dimensionless, hence the one to
   compare across equations).
 
+The **bold** entry in each row is the smallest error of that row (markdown
+does not support colour).
+
 ### RMSE (absolute, physical units)
 
 | equation (n_train) | FM-BSI train | FM-BSI val | FM-ABSI train | FM-ABSI val | FM-NFM train | FM-NFM val |
 |---|---|---|---|---|---|---|
-| kuramoto_sivashinsky1d (384) | 0.0099 | 0.0098 | 0.0120 | 0.0125 | 0.1293 | 0.1266 |
-| kuramoto_sivashinsky1d (1000) | 0.0028 | 0.0028 | 0.0027 | 0.0027 | 0.1098 | 0.0972 |
-| kuramoto_sivashinsky1d (10000) | 0.0015 | 0.0015 | 0.0015 | 0.0016 | 0.0015 | 0.0015 |
-| square_advection1d (1000) | 0.0884 | 0.0875 | 0.0902 | 0.0838 | 0.0913 | 0.0911 |
-| lwr1d (1000) | 0.0357 | 0.0343 | 0.0346 | 0.0344 | 0.0346 | 0.0347 |
-| buckley_leverett1d (1000) | 0.0314 | 0.0315 | 0.0308 | 0.0311 | 0.0402 | 0.0390 |
+| kuramoto_sivashinsky1d (384) | 0.009922 | **0.009793** | 0.01197 | 0.01251 | 0.1293 | 0.1266 |
+| kuramoto_sivashinsky1d (1000) | 0.002844 | 0.00278 | 0.002703 | **0.002689** | 0.1098 | 0.0972 |
+| kuramoto_sivashinsky1d (10000) | 0.001526 | 0.001531 | 0.001517 | 0.001558 | **0.001455** | 0.001491 |
+| square_advection1d (1000) | 0.0884 | 0.08746 | 0.09022 | **0.08375** | 0.09134 | 0.09111 |
+| lwr1d (1000) | 0.03565 | **0.03435** | 0.03455 | 0.03444 | 0.03464 | 0.03472 |
+| buckley_leverett1d (1000) | 0.03142 | 0.03146 | **0.03085** | 0.03113 | 0.04021 | 0.03896 |
 
 ### Relative L2 error
 
 | equation (n_train) | FM-BSI train | FM-BSI val | FM-ABSI train | FM-ABSI val | FM-NFM train | FM-NFM val |
 |---|---|---|---|---|---|---|
-| kuramoto_sivashinsky1d (384) | 0.0291 | 0.0287 | 0.0338 | 0.0366 | 0.3434 | 0.3401 |
-| kuramoto_sivashinsky1d (1000) | 0.0082 | 0.0082 | 0.0077 | 0.0077 | 0.1912 | 0.2010 |
-| kuramoto_sivashinsky1d (10000) | 0.0046 | 0.0046 | 0.0046 | 0.0048 | 0.0045 | 0.0046 |
-| square_advection1d (1000) | 0.1780 | 0.1735 | 0.1822 | 0.1711 | 0.1824 | 0.1811 |
-| lwr1d (1000) | 0.0576 | 0.0570 | 0.0545 | 0.0557 | 0.0581 | 0.0560 |
-| buckley_leverett1d (1000) | 0.0584 | 0.0589 | 0.0575 | 0.0581 | 0.0723 | 0.0708 |
+| kuramoto_sivashinsky1d (384) | 0.02905 | **0.02873** | 0.03382 | 0.03664 | 0.3434 | 0.3401 |
+| kuramoto_sivashinsky1d (1000) | 0.008164 | 0.008239 | **0.007692** | 0.007719 | 0.1912 | 0.201 |
+| kuramoto_sivashinsky1d (10000) | 0.004632 | 0.004602 | 0.004597 | 0.004754 | **0.00447** | 0.004575 |
+| square_advection1d (1000) | 0.178 | 0.1735 | 0.1822 | **0.1711** | 0.1824 | 0.1811 |
+| lwr1d (1000) | 0.05757 | 0.05703 | **0.05448** | 0.05567 | 0.05815 | 0.05597 |
+| buckley_leverett1d (1000) | 0.05841 | 0.05888 | **0.05745** | 0.0581 | 0.07228 | 0.07083 |
 
 ## Requirements
 
