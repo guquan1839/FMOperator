@@ -43,14 +43,14 @@ split into four *fields*
 and the prediction is
 
 $$
-y \;=\; \mathrm{decoder}\Big(\mathrm{pool}\big(\{\phi_h(i,j)\}\big)\Big) \;+\; w^\top [\text{history}; x; t; \text{stats}].
+y = \mathrm{decoder}\Big(\mathrm{pool}\big(\{\phi_h(i,j)\}\big)\Big) + w^\top [\text{history}, x, t, \text{stats}]
 $$
 
 The interaction representation of one head $h$ and one unordered field pair
 $i<j$ is the **symmetric low-rank bilinear form**
 
 $$
-\phi_h(i,j) \;=\; L_{h,i}(e_i) \odot R_{h,j}(e_j) \;+\; L_{h,j}(e_j) \odot R_{h,i}(e_i) \;\in\; \mathbb{R}^{r},
+\phi_h(i,j) = L_{h,i}(e_i) \odot R_{h,j}(e_j) + L_{h,j}(e_j) \odot R_{h,i}(e_i) \in \mathbb{R}^{r}
 $$
 
 where $e_i$ are the field embeddings, $\odot$ is the Hadamard product,
@@ -116,6 +116,52 @@ Every file can also be executed directly for a parameter-count self-check:
 ```bash
 python FMO_MBSI.py
 ```
+
+## Experiments
+
+Released runs are under `Experiments/`: `KS` at three training-set sizes, and
+one run per equation for the others.
+
+Protocol, identical for every run below: 50,000 optimizer steps, seed 38, query
+batch of 1024 sampled `(trajectory, x, t)` points, stride 2 (64 of the 128 grid
+points), 20 input frames -> 20 output frames, per-trajectory history
+normalisation, and the same convolutional history encoder, decoder and wide
+linear skip. The three models differ **only** in how the four fields
+`(history, x, t, stats)` are fused. Reported errors are always on the held-out
+**test** split.
+
+The two columns per model are the two checkpoint-selection rules, both measured
+on that same test split: `train` selects the checkpoint with the lowest
+training-batch loss, `val` the one with the lowest loss on a fixed validation
+minibatch. They are selection rules, not train/validation errors.
+
+* **RMSE** = `sqrt(mean over test points of (prediction - target)^2)`, in the
+  physical units of the field.
+* **Relative L2** = mean over test trajectories of
+  `||prediction - target||_2 / ||target||_2` (dimensionless, hence the one to
+  compare across equations).
+
+### RMSE (absolute, physical units)
+
+| equation (n_train) | FM-BSI train | FM-BSI val | FM-ABSI train | FM-ABSI val | FM-NFM train | FM-NFM val |
+|---|---|---|---|---|---|---|
+| kuramoto_sivashinsky1d (384) | 0.0099 | 0.0098 | 0.0120 | 0.0125 | 0.1293 | 0.1266 |
+| kuramoto_sivashinsky1d (1000) | 0.0028 | 0.0028 | 0.0027 | 0.0027 | 0.1098 | 0.0972 |
+| kuramoto_sivashinsky1d (10000) | 0.0015 | 0.0015 | 0.0015 | 0.0016 | 0.0015 | 0.0015 |
+| square_advection1d (1000) | 0.0884 | 0.0875 | 0.0902 | 0.0838 | 0.0913 | 0.0911 |
+| lwr1d (1000) | 0.0357 | 0.0343 | 0.0346 | 0.0344 | 0.0346 | 0.0347 |
+| buckley_leverett1d (1000) | 0.0314 | 0.0315 | 0.0308 | 0.0311 | 0.0402 | 0.0390 |
+
+### Relative L2 error
+
+| equation (n_train) | FM-BSI train | FM-BSI val | FM-ABSI train | FM-ABSI val | FM-NFM train | FM-NFM val |
+|---|---|---|---|---|---|---|
+| kuramoto_sivashinsky1d (384) | 0.0291 | 0.0287 | 0.0338 | 0.0366 | 0.3434 | 0.3401 |
+| kuramoto_sivashinsky1d (1000) | 0.0082 | 0.0082 | 0.0077 | 0.0077 | 0.1912 | 0.2010 |
+| kuramoto_sivashinsky1d (10000) | 0.0046 | 0.0046 | 0.0046 | 0.0048 | 0.0045 | 0.0046 |
+| square_advection1d (1000) | 0.1780 | 0.1735 | 0.1822 | 0.1711 | 0.1824 | 0.1811 |
+| lwr1d (1000) | 0.0576 | 0.0570 | 0.0545 | 0.0557 | 0.0581 | 0.0560 |
+| buckley_leverett1d (1000) | 0.0584 | 0.0589 | 0.0575 | 0.0581 | 0.0723 | 0.0708 |
 
 ## Requirements
 
