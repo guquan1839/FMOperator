@@ -1,0 +1,8 @@
+Equation-sweep comparison panels
+
+ks_seed38: samples=[0, 11, 22, 33, 44, 55, 66, 77, 88, 99] sensors=64 window=0..19
+  unified field scale +-0.8000, error scale 0..0.6500
+  fm_nfm           params= 501,639 test relL2: train-sel=0.191216 val-sel=0.200999
+  fm_bsi           params= 649,223 test relL2: train-sel=0.008164 val-sel=0.008239
+  fm_absi_perhead  params= 649,351 test relL2: train-sel=0.007692 val-sel=0.007719
+

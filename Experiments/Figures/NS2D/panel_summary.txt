@@ -1,0 +1,9 @@
+NS-2D fusion panels
+samples (test indices): [0, 11, 22, 33, 44, 55, 66, 77, 88, 99]
+future frame: 9 (t index 19 of 10..19)
+unified field scale: +-3.8000
+unified error scale: 0..4.4000
+
+fm_nfm           params= 567,400 test relL2: train-sel=0.268220 val-sel=0.271581
+fm_bsi           params= 714,984 test relL2: train-sel=0.267243 val-sel=0.267772
+fm_absi_perhead  params= 715,112 test relL2: train-sel=0.259609 val-sel=0.260634

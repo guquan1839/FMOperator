@@ -1,0 +1,32 @@
+Equation-sweep comparison panels
+
+buckley: samples=[0, 11, 22, 33, 44, 55, 66, 77, 88, 99] sensors=64 window=0..19
+  unified field scale +-0.9000, error scale 0..0.4500
+  fm_nfm           params= 501,639 test relL2: train-sel=0.072279 val-sel=0.070827
+  fm_bsi           params= 649,223 test relL2: train-sel=0.058407 val-sel=0.058875
+  fm_absi_perhead  params= 649,351 test relL2: train-sel=0.057451 val-sel=0.058099
+
+burgers1d: samples=[0, 11, 22, 33, 44, 55, 66, 77, 88, 99] sensors=64 window=0..19
+  unified field scale +-0.8000, error scale 0..0.9000
+  fm_nfm           params= 501,639 test relL2: train-sel=0.117416 val-sel=0.135159
+  fm_bsi           params= 649,223 test relL2: train-sel=0.104897 val-sel=0.122455
+  fm_absi_perhead  params= 649,351 test relL2: train-sel=0.100391 val-sel=0.103362
+
+cubic: samples=[0, 11, 22, 33, 44, 55, 66, 77, 88, 99] sensors=64 window=0..19
+  unified field scale +-0.8500, error scale 0..0.4000
+  fm_nfm           params= 501,639 test relL2: train-sel=0.146377 val-sel=0.145947
+  fm_bsi           params= 649,223 test relL2: train-sel=0.041407 val-sel=0.041370
+  fm_absi_perhead  params= 649,351 test relL2: train-sel=0.036142 val-sel=0.036277
+
+lwr: samples=[0, 11, 22, 33, 44, 55, 66, 77, 88, 99] sensors=64 window=0..19
+  unified field scale +-0.9000, error scale 0..0.8500
+  fm_nfm           params= 501,639 test relL2: train-sel=0.058146 val-sel=0.055966
+  fm_bsi           params= 649,223 test relL2: train-sel=0.057574 val-sel=0.057029
+  fm_absi_perhead  params= 649,351 test relL2: train-sel=0.054484 val-sel=0.055665
+
+square_advection: samples=[0, 11, 22, 33, 44, 55, 66, 77, 88, 99] sensors=64 window=0..19
+  unified field scale +-1.4500, error scale 0..1.4000
+  fm_nfm           params= 501,639 test relL2: train-sel=0.182372 val-sel=0.181131
+  fm_bsi           params= 649,223 test relL2: train-sel=0.177983 val-sel=0.173500
+  fm_absi_perhead  params= 649,351 test relL2: train-sel=0.182246 val-sel=0.171148
+
