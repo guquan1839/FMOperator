@@ -1,0 +1,27 @@
+## Reported test errors
+
+Each model column is reported as `train / val`. The two values are the test error
+obtained by selecting the checkpoint with the lowest training-batch loss or the
+lowest fixed-validation-minibatch loss, respectively.
+
+### RMSE (absolute, physical units)
+
+| equation (n_train) | FM-BSI | FM-ABSI | FM-NFM | DeepONet | POD-DeepONet | Shift-DeepONet | NOMAD |
+|---|---|---|---|---|---|---|---|
+| kuramoto_sivashinsky1d (1000) | 0.002454&nbsp;/&nbsp;**0.002411** | 0.002619&nbsp;/&nbsp;0.002660 | 0.02614&nbsp;/&nbsp;0.02604 | 0.03484&nbsp;/&nbsp;0.02831 | 0.05948&nbsp;/&nbsp;0.05200 | 0.1020&nbsp;/&nbsp;0.07381 | 0.1161&nbsp;/&nbsp;0.1171 |
+| square_advection1d (1000) | 0.09054&nbsp;/&nbsp;**0.08046** | 0.08794&nbsp;/&nbsp;0.08249 | 0.09475&nbsp;/&nbsp;0.08815 | 0.09328&nbsp;/&nbsp;0.09192 | 0.08731&nbsp;/&nbsp;0.08583 | 0.09552&nbsp;/&nbsp;0.09588 | 0.09151&nbsp;/&nbsp;0.09478 |
+| lwr1d (1000) | 0.03681&nbsp;/&nbsp;0.03606 | 0.03518&nbsp;/&nbsp;0.03458 | 0.03685&nbsp;/&nbsp;0.03505 | 0.03891&nbsp;/&nbsp;0.03782 | 0.04055&nbsp;/&nbsp;0.04383 | 0.03141&nbsp;/&nbsp;0.03324 | **0.02974**&nbsp;/&nbsp;0.02979 |
+| buckley_leverett1d (1000) | 0.03118&nbsp;/&nbsp;0.03118 | 0.03106&nbsp;/&nbsp;**0.03033** | 0.03712&nbsp;/&nbsp;0.03677 | 0.04843&nbsp;/&nbsp;0.04810 | 0.05527&nbsp;/&nbsp;0.05081 | 0.05677&nbsp;/&nbsp;0.05690 | 0.05598&nbsp;/&nbsp;0.05499 |
+| cubic_conservation1d (1000) | 0.01419&nbsp;/&nbsp;0.01419 | **0.01391**&nbsp;/&nbsp;0.01404 | 0.07949&nbsp;/&nbsp;0.07648 | 0.04858&nbsp;/&nbsp;0.05014 | 0.06951&nbsp;/&nbsp;0.06024 | 0.06753&nbsp;/&nbsp;0.06835 | 0.09279&nbsp;/&nbsp;0.09421 |
+| burgers1d (1000) | 0.02615&nbsp;/&nbsp;0.02745 | **0.02558**&nbsp;/&nbsp;0.03248 | 0.03443&nbsp;/&nbsp;0.03520 | 0.07588&nbsp;/&nbsp;0.07815 | 0.09000&nbsp;/&nbsp;0.08514 | 0.08954&nbsp;/&nbsp;0.08944 | 0.07907&nbsp;/&nbsp;0.08198 |
+
+### Relative L2 error
+
+| equation (n_train) | FM-BSI | FM-ABSI | FM-NFM | DeepONet | POD-DeepONet | Shift-DeepONet | NOMAD |
+|---|---|---|---|---|---|---|---|
+| kuramoto_sivashinsky1d (1000) | 0.007304&nbsp;/&nbsp;**0.007114** | 0.007560&nbsp;/&nbsp;0.007781 | 0.06397&nbsp;/&nbsp;0.06397 | 0.1078&nbsp;/&nbsp;0.08660 | 0.1815&nbsp;/&nbsp;0.1586 | 0.2190&nbsp;/&nbsp;0.1484 | 0.3237&nbsp;/&nbsp;0.3270 |
+| square_advection1d (1000) | 0.1833&nbsp;/&nbsp;**0.1630** | 0.1727&nbsp;/&nbsp;0.1670 | 0.1882&nbsp;/&nbsp;0.1717 | 0.1962&nbsp;/&nbsp;0.1967 | 0.1787&nbsp;/&nbsp;0.1765 | 0.1962&nbsp;/&nbsp;0.1962 | 0.1812&nbsp;/&nbsp;0.1883 |
+| lwr1d (1000) | 0.05931&nbsp;/&nbsp;0.05769 | 0.05548&nbsp;/&nbsp;0.05575 | 0.06099&nbsp;/&nbsp;0.05764 | 0.07109&nbsp;/&nbsp;0.06956 | 0.07271&nbsp;/&nbsp;0.07796 | 0.05183&nbsp;/&nbsp;0.05375 | **0.04929**&nbsp;/&nbsp;0.04933 |
+| buckley_leverett1d (1000) | 0.05807&nbsp;/&nbsp;0.05807 | 0.05791&nbsp;/&nbsp;**0.05671** | 0.06662&nbsp;/&nbsp;0.06630 | 0.09135&nbsp;/&nbsp;0.09100 | 0.1044&nbsp;/&nbsp;0.09627 | 0.1055&nbsp;/&nbsp;0.1041 | 0.1027&nbsp;/&nbsp;0.1009 |
+| cubic_conservation1d (1000) | 0.03833&nbsp;/&nbsp;0.03822 | **0.03806**&nbsp;/&nbsp;0.03832 | 0.1740&nbsp;/&nbsp;0.1729 | 0.1356&nbsp;/&nbsp;0.1387 | 0.1966&nbsp;/&nbsp;0.1690 | 0.1821&nbsp;/&nbsp;0.1838 | 0.2596&nbsp;/&nbsp;0.2617 |
+| burgers1d (1000) | 0.09704&nbsp;/&nbsp;0.1002 | **0.09342**&nbsp;/&nbsp;0.1185 | 0.1288&nbsp;/&nbsp;0.1312 | 0.2905&nbsp;/&nbsp;0.2982 | 0.3457&nbsp;/&nbsp;0.3248 | 0.3214&nbsp;/&nbsp;0.3276 | 0.2961&nbsp;/&nbsp;0.3052 |

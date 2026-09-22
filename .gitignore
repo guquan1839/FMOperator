@@ -8,6 +8,9 @@
 !FMO_ABSI.py
 !FMO_MBSI.py
 !FMO_MABSI.py
+!data
+!figures/
+!figures/**
 
 # Released experiments: KS fusion ablation at three training-set sizes,
 # three fusion methods each.  The directory has to be un-ignored level by
