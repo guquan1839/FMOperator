@@ -119,21 +119,35 @@ python FMO_MBSI.py
 
 ## Experiments
 
-Released runs are under `Experiments/`: `KS` at three training-set sizes, and
-one run per equation for the others.
+Released runs are under `Experiments/<protocol>/<equation>/<n_train>/`, where the
+top level is the sampling protocol:
 
-Protocol, identical for every run below: 50,000 optimizer steps, seed 38, query
+* `seed38/` — the runs reported in the tables below for
+  `kuramoto_sivashinsky1d (1000)` and all five equations. The process hash seed
+  is pinned (`PYTHONHASHSEED=38`), so every model of a comparison draws its
+  query batches from the **same** sampling stream (strictly paired runs). These
+  folders also carry the four baseline models used in the paper
+  (`DeepONet`, `POD_DeepONet`, `Shift_DeepONet`, `NOMAD`, `result.json` only for
+  the equations).
+* `randomseed/` — the earlier releases, produced without pinning the
+  per-process sampling stream. `KS` at 384 and 10000 training trajectories only
+  have this variant; they are kept as an archive and are not part of any
+  comparison below (all comparisons use `seed38/`).
+
+Protocol, identical for every run: 50,000 optimizer steps, seed 38, query
 batch of 1024 sampled `(trajectory, x, t)` points, stride 2 (64 of the 128 grid
 points), 20 input frames -> 20 output frames, per-trajectory history
 normalisation, and the same convolutional history encoder, decoder and wide
-linear skip. The three models differ **only** in how the four fields
-`(history, x, t, stats)` are fused. Reported errors are always on the held-out
-**test** split.
+linear skip. The three FMO models differ **only** in how the four fields
+`(history, x, t, stats)` are fused; the four baselines (`DeepONet`,
+`POD-DeepONet`, `Shift-DeepONet`, `NOMAD`) are trained on the same data with the
+same protocol and a latent dimension of 100. Reported errors are always on the
+held-out **test** split.
 
-The two columns per model are the two checkpoint-selection rules, both measured
-on that same test split: `train` selects the checkpoint with the lowest
-training-batch loss, `val` the one with the lowest loss on a fixed validation
-minibatch. They are selection rules, not train/validation errors.
+Each model column reports `train / val`, the two checkpoint-selection rules,
+both measured on that same test split: `train` selects the checkpoint with the
+lowest training-batch loss, `val` the one with the lowest loss on a fixed
+validation minibatch. They are selection rules, not train/validation errors.
 
 * **RMSE** = `sqrt(mean over test points of (prediction - target)^2)`, in the
   physical units of the field.
@@ -141,34 +155,30 @@ minibatch. They are selection rules, not train/validation errors.
   `||prediction - target||_2 / ||target||_2` (dimensionless, hence the one to
   compare across equations).
 
-The **bold** entry in each row is the smallest error of that row (markdown
-does not support colour).
+The **bold** entry is the smallest error of each row (markdown does not support
+colour).
 
 ### RMSE (absolute, physical units)
 
-| equation (n_train) | FM-BSI train | FM-BSI val | FM-ABSI train | FM-ABSI val | FM-NFM train | FM-NFM val |
-|---|---|---|---|---|---|---|
-| kuramoto_sivashinsky1d (384) | 0.009922 | **0.009793** | 0.01197 | 0.01251 | 0.1293 | 0.1266 |
-| kuramoto_sivashinsky1d (1000) | 0.002844 | 0.00278 | 0.002703 | **0.002689** | 0.1098 | 0.0972 |
-| kuramoto_sivashinsky1d (10000) | 0.001526 | 0.001531 | 0.001517 | 0.001558 | **0.001455** | 0.001491 |
-| square_advection1d (1000) | 0.0884 | 0.08746 | 0.09022 | **0.08375** | 0.09134 | 0.09111 |
-| lwr1d (1000) | 0.03565 | **0.03435** | 0.03455 | 0.03444 | 0.03464 | 0.03472 |
-| buckley_leverett1d (1000) | 0.03142 | 0.03146 | **0.03085** | 0.03113 | 0.04021 | 0.03896 |
-| cubic_conservation1d (1000) | 0.0152 | 0.01517 | **0.01323** | 0.0133 | 0.06479 | 0.06359 |
-| burgers1d (1000) | 0.02828 | 0.03357 | **0.02741** | 0.02809 | 0.03131 | 0.03588 |
+| equation (n_train) | FM-BSI | FM-ABSI | FM-NFM | DeepONet | POD-DeepONet | Shift-DeepONet | NOMAD |
+|---|---|---|---|---|---|---|---|
+| kuramoto_sivashinsky1d (1000) | 0.002454 / **0.002411** | 0.002619 / 0.002660 | 0.02614 / 0.02604 | 0.03484 / 0.02831 | 0.05948 / 0.05200 | 0.1020 / 0.07381 | 0.1161 / 0.1171 |
+| square_advection1d (1000) | 0.09054 / **0.08046** | 0.08794 / 0.08249 | 0.09475 / 0.08815 | 0.09328 / 0.09192 | 0.08731 / 0.08583 | 0.09552 / 0.09588 | 0.09151 / 0.09478 |
+| lwr1d (1000) | 0.03681 / 0.03606 | 0.03518 / 0.03458 | 0.03685 / 0.03505 | 0.03891 / 0.03782 | 0.04055 / 0.04383 | 0.03141 / 0.03324 | **0.02974** / 0.02979 |
+| buckley_leverett1d (1000) | 0.03118 / 0.03118 | 0.03106 / **0.03033** | 0.03712 / 0.03677 | 0.04843 / 0.04810 | 0.05527 / 0.05081 | 0.05677 / 0.05690 | 0.05598 / 0.05499 |
+| cubic_conservation1d (1000) | 0.01419 / 0.01419 | **0.01391** / 0.01404 | 0.07949 / 0.07648 | 0.04858 / 0.05014 | 0.06951 / 0.06024 | 0.06753 / 0.06835 | 0.09279 / 0.09421 |
+| burgers1d (1000) | 0.02615 / 0.02745 | **0.02558** / 0.03248 | 0.03443 / 0.03520 | 0.07588 / 0.07815 | 0.09000 / 0.08514 | 0.08954 / 0.08944 | 0.07907 / 0.08198 |
 
 ### Relative L2 error
 
-| equation (n_train) | FM-BSI train | FM-BSI val | FM-ABSI train | FM-ABSI val | FM-NFM train | FM-NFM val |
-|---|---|---|---|---|---|---|
-| kuramoto_sivashinsky1d (384) | 0.02905 | **0.02873** | 0.03382 | 0.03664 | 0.3434 | 0.3401 |
-| kuramoto_sivashinsky1d (1000) | 0.008164 | 0.008239 | **0.007692** | 0.007719 | 0.1912 | 0.201 |
-| kuramoto_sivashinsky1d (10000) | 0.004632 | 0.004602 | 0.004597 | 0.004754 | **0.00447** | 0.004575 |
-| square_advection1d (1000) | 0.178 | 0.1735 | 0.1822 | **0.1711** | 0.1824 | 0.1811 |
-| lwr1d (1000) | 0.05757 | 0.05703 | **0.05448** | 0.05567 | 0.05815 | 0.05597 |
-| buckley_leverett1d (1000) | 0.05841 | 0.05888 | **0.05745** | 0.0581 | 0.07228 | 0.07083 |
-| cubic_conservation1d (1000) | 0.04141 | 0.04137 | **0.03614** | 0.03628 | 0.1464 | 0.1459 |
-| burgers1d (1000) | 0.1049 | 0.1225 | **0.1004** | 0.1034 | 0.1174 | 0.1352 |
+| equation (n_train) | FM-BSI | FM-ABSI | FM-NFM | DeepONet | POD-DeepONet | Shift-DeepONet | NOMAD |
+|---|---|---|---|---|---|---|---|
+| kuramoto_sivashinsky1d (1000) | 0.007304 / **0.007114** | 0.007560 / 0.007781 | 0.06397 / 0.06397 | 0.1078 / 0.08660 | 0.1815 / 0.1586 | 0.2190 / 0.1484 | 0.3237 / 0.3270 |
+| square_advection1d (1000) | 0.1833 / **0.1630** | 0.1727 / 0.1670 | 0.1882 / 0.1717 | 0.1962 / 0.1967 | 0.1787 / 0.1765 | 0.1962 / 0.1962 | 0.1812 / 0.1883 |
+| lwr1d (1000) | 0.05931 / 0.05769 | 0.05548 / 0.05575 | 0.06099 / 0.05764 | 0.07109 / 0.06956 | 0.07271 / 0.07796 | 0.05183 / 0.05375 | **0.04929** / 0.04933 |
+| buckley_leverett1d (1000) | 0.05807 / 0.05807 | 0.05791 / **0.05671** | 0.06662 / 0.06630 | 0.09135 / 0.09100 | 0.1044 / 0.09627 | 0.1055 / 0.1041 | 0.1027 / 0.1009 |
+| cubic_conservation1d (1000) | 0.03833 / 0.03822 | **0.03806** / 0.03832 | 0.1740 / 0.1729 | 0.1356 / 0.1387 | 0.1966 / 0.1690 | 0.1821 / 0.1838 | 0.2596 / 0.2617 |
+| burgers1d (1000) | 0.09704 / 0.1002 | **0.09342** / 0.1185 | 0.1288 / 0.1312 | 0.2905 / 0.2982 | 0.3457 / 0.3248 | 0.3214 / 0.3276 | 0.2961 / 0.3052 |
 
 ## Requirements
 
