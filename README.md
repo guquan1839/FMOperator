@@ -54,6 +54,45 @@ seven models.
 
 ![Burgers 1D bar chart](figures/burgers1d_bar_chart.png)
 
+### Per-sample relative $L^2$ error distribution
+
+![Per-sample relative L2 error distribution, baselines vs FM variants](figures/l2_error_distribution_baselines_vs_fmo.png)
+
+The error *distribution* behind the aggregated numbers above, for the five equations that
+have the full seven-model sweep (Kuramoto–Sivashinsky 1D is not part of this figure).
+Columns are the equations, rows group the models — the four baselines on top, the three
+FM variants below. One relative $L^2$ error is computed per test trajectory and
+histogrammed over the 100 trajectories of the test split; the numbers correspond to the
+validation-selected checkpoint, i.e. the second value of each `train / val` pair in the
+tables above.
+
+Reading notes:
+
+* Every bar covers a 0.1-decade error band and its height is the **fraction of test
+  trajectories** whose error falls into that band, so the bar heights of one model sum
+  to 1 and can be read directly as percentages. The height is not a count and not a
+  probability density.
+* Within a column the x range and the y scale are shared by the two panels, so a
+  baseline and a variant can be compared error band by error band. Different equations
+  keep their own x range.
+* The median of each distribution is printed in the legend.
+
+What the shapes add to the aggregated tables:
+
+* **Burgers 1D** — the strongest separation: the FM variants sit almost entirely below
+  the baselines, with medians of 0.094–0.124 against 0.268–0.296.
+* **Cubic Conservation** — *FM-BSI* and *FM-ABSI* concentrate near 0.03 while the
+  baselines have medians of 0.127–0.230 and a much wider spread. *FM-NFM* still improves
+  the median (0.101 vs 0.127 for DeepONet) but keeps a heavier upper tail than the other
+  two variants.
+* **Buckley–Leverett** — all three variants shift left and narrow (medians 0.054–0.060
+  against 0.088–0.097).
+* **Square Advection** — the variants are better on the median but the distributions
+  overlap heavily: the improvement is real, the separation is not clean.
+* **LWR 1D** — the seven distributions are nearly indistinguishable (medians
+  0.044–0.067). This equation does not discriminate between the models, which is worth
+  keeping in mind when reading the aggregate tables.
+
 ## Requirements
 
 * Python ≥ 3.9
