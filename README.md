@@ -67,42 +67,6 @@ histogrammed over the 100 trajectories of the test split; the numbers correspond
 validation-selected checkpoint, i.e. the second value of each `train / val` pair in the
 tables above.
 
-Reading notes:
-
-* Every bar covers a 0.1-decade error band and its height is the **fraction of test
-  trajectories** whose error falls into that band, so the bar heights of one model sum
-  to 1 and can be read directly as percentages. The height is not a count and not a
-  probability density.
-* Within a column the x range and the y scale are shared by the two panels, so a
-  baseline and a variant can be compared error band by error band. Different equations
-  keep their own x range.
-* The median of each distribution is printed in the legend.
-
-What the shapes add to the aggregated tables:
-
-* **Kuramoto–Sivashinsky 1D** — the largest separation of the whole release. *FM-BSI* and
-  *FM-ABSI* are nearly identical and extremely concentrated (medians 0.0060 and 0.0066,
-  P90 below 0.0125), a factor of 13–14 below the best baseline median (DeepONet,
-  0.085). *FM-NFM* (median 0.044) also beats every baseline, but with a heavier upper
-  tail (P90 0.147, above DeepONet's 0.116), so the gap the tables report inside the FM
-  family is a property of the whole test set rather than of a few outlier trajectories.
-  Among the baselines, *Shift-DeepONet* has the best median (0.111) but the heaviest
-  tail (maximum 1.42, the worst single trajectory of this batch) and *NOMAD* is the
-  weakest overall (median 0.288, P90 0.556).
-* **Square Advection** — the variants are better on the median but the distributions
-  overlap heavily: the improvement is real, the separation is not clean.
-* **LWR 1D** — the seven distributions are nearly indistinguishable (medians
-  0.044–0.067). This equation does not discriminate between the models, which is worth
-  keeping in mind when reading the aggregate tables.
-* **Buckley–Leverett** — all three variants shift left and narrow (medians 0.054–0.060
-  against 0.088–0.097).
-* **Cubic Conservation** — *FM-BSI* and *FM-ABSI* concentrate near 0.03 while the
-  baselines have medians of 0.127–0.230 and a much wider spread. *FM-NFM* still improves
-  the median (0.101 vs 0.127 for DeepONet) but keeps a heavier upper tail than the other
-  two variants.
-* **Burgers 1D** — the FM variants sit almost entirely below the baselines, with medians
-  of 0.094–0.124 against 0.268–0.296.
-
 ## Requirements
 
 * Python ≥ 3.9
